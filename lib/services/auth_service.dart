@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../config/config.dart';
 
 class AuthService {
-  final String baseUrl = 'http://gasstugas.riakgu.dev/api';
+  final String baseUrl = Config.baseUrl;
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     final response = await http.post(

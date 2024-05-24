@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../config/config.dart';
 
 class CalendarService {
-  final String baseUrl = 'http://gasstugas.riakgu.dev/api';
+  final String baseUrl = Config.baseUrl;
 
   Future<Map<DateTime, List<Map<String, dynamic>>>> fetchCalendarEvents() async {
     final prefs = await SharedPreferences.getInstance();
