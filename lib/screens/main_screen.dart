@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'chatbot_screen.dart';
 import 'calendar_screen.dart';
+import 'category_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(),
     ChatbotScreen(),
     CalendarScreen(),
+    CategoryScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -41,9 +43,15 @@ class _MainScreenState extends State<MainScreen> {
             icon: Icon(Icons.calendar_today),
             label: 'Calendar',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: 'Categories',
+          ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
         onTap: _onItemTapped,
       ),
     );
