@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
-import 'chatbot_screen.dart';
 import 'calendar_screen.dart';
-import 'category_screen.dart';
 import 'task_screen.dart';
-import 'user_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -16,11 +13,8 @@ class _MainScreenState extends State<MainScreen> {
 
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    ChatbotScreen(),
-    CalendarScreen(),
-    CategoryScreen(),
     TaskScreen(),
-    UserScreen(),
+    CalendarScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -40,24 +34,12 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chatbot',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: 'Categories',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.task),
             label: 'Tasks',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Users',
+            icon: Icon(Icons.calendar_today),
+            label: 'Calendar',
           ),
         ],
         currentIndex: _selectedIndex,
