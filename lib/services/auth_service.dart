@@ -107,9 +107,11 @@ class AuthService {
       },
       body: {
         'current_password': currentPassword,
-        'new_password': newPassword,
+        'password': newPassword,
       },
     );
+
+    print(response.body);
 
     if (response.statusCode != 200) {
       final data = json.decode(response.body);
