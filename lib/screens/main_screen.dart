@@ -3,6 +3,7 @@ import 'home_screen.dart';
 import 'chatbot_screen.dart';
 import 'calendar_screen.dart';
 import 'category_screen.dart';
+import 'task_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class _MainScreenState extends State<MainScreen> {
     ChatbotScreen(),
     CalendarScreen(),
     CategoryScreen(),
+    TaskScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -46,6 +48,10 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.category),
             label: 'Categories',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.task),
+            label: 'Tasks',
           ),
         ],
         currentIndex: _selectedIndex,

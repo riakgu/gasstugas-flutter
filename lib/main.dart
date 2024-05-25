@@ -4,6 +4,7 @@ import 'providers/auth_provider.dart';
 import 'providers/chat_provider.dart';
 import 'providers/calendar_provider.dart';
 import 'providers/category_provider.dart';
+import 'providers/task_provider.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
 import 'screens/main_screen.dart';
@@ -11,6 +12,7 @@ import 'screens/home_screen.dart';
 import 'screens/chatbot_screen.dart';
 import 'screens/calendar_screen.dart';
 import 'screens/category_screen.dart';
+import 'screens/task_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ChatProvider()),
         ChangeNotifierProvider(create: (_) => CalendarProvider()),
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
+        ChangeNotifierProvider(create: (_) => TaskProvider()),
       ],
       child: MaterialApp(
         title: 'GasstuGas',
@@ -51,6 +54,7 @@ class MyApp extends StatelessWidget {
           '/chatbot': (context) => ChatbotScreen(),
           '/calendar': (context) => CalendarScreen(),
           '/categories': (context) => CategoryScreen(),
+          '/tasks': (context) => TaskScreen(),
         },
       ),
     );
