@@ -43,6 +43,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
       body: categoryProvider.isLoading
           ? Center(child: CircularProgressIndicator())
+          : categoryProvider.categories.isEmpty
+          ? Center(child: Text('No categories available.'))
           : ListView.builder(
         itemCount: categoryProvider.categories.length,
         itemBuilder: (context, index) {

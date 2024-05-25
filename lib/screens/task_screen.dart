@@ -68,6 +68,8 @@ class _TaskScreenState extends State<TaskScreen> {
       ),
       body: taskProvider.isLoading || categoryProvider.isLoading
           ? Center(child: CircularProgressIndicator())
+          : taskProvider.tasks.isEmpty
+          ? Center(child: Text('No tasks available.'))
           : ListView.builder(
         itemCount: taskProvider.tasks.length,
         itemBuilder: (context, index) {
