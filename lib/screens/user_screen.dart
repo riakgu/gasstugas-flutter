@@ -50,29 +50,47 @@ class _UserScreenState extends State<UserScreen> {
       ),
       body: userProvider.isLoading
           ? Center(child: CircularProgressIndicator())
+          : userProvider.users.isEmpty
+          ? Center(child: Text('No users available.'))
           : ListView.builder(
+        padding: EdgeInsets.all(8.0),
         itemCount: userProvider.users.length,
         itemBuilder: (context, index) {
           final user = userProvider.users[index];
-          return ListTile(
-            title: Text(user.name),
-            subtitle: Text(user.email),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    _showEditUserDialog(user);
-                  },
+          return Card(
+            margin: EdgeInsets.symmetric(vertical: 8.0),
+            elevation: 4.0,
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+              leading: CircleAvatar(
+                backgroundColor: Colors.blue,
+                child: Text(
+                  user.name[0].toUpperCase(),
+                  style: TextStyle(color: Colors.white),
                 ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    _confirmDeleteUser(user);
-                  },
-                ),
-              ],
+              ),
+              title: Text(
+                user.name,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(user.email),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.edit, color: Colors.orange),
+                    onPressed: () {
+                      _showEditUserDialog(user);
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete, color: Colors.red),
+                    onPressed: () {
+                      _confirmDeleteUser(user);
+                    },
+                  ),
+                ],
+              ),
             ),
           );
         },
@@ -263,13 +281,8 @@ class _UserScreenState extends State<UserScreen> {
                 'role': _selectedRole,
               };
 
-              // Filter out null values before updating
-              final filteredUserData = userData
-                  .map((key, value) => MapEntry(key, value!))
-                  .cast<String, String>();
-
               Provider.of<UserProvider>(context, listen: false)
-                  .updateUser(user.id, filteredUserData);
+                  .updateUser(user.id, userData);
               Navigator.pop(context);
             },
             child: Text('Update'),

@@ -107,25 +107,44 @@ class ProfileScreen extends StatelessWidget {
   void _showChangePasswordDialog(BuildContext context, AuthProvider authProvider) {
     final _currentPasswordController = TextEditingController();
     final _newPasswordController = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Change Password'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: _currentPasswordController,
-              decoration: InputDecoration(labelText: 'Current Password'),
-              obscureText: true,
-            ),
-            TextField(
-              controller: _newPasswordController,
-              decoration: InputDecoration(labelText: 'New Password'),
-              obscureText: true,
-            ),
-          ],
+        content: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: _currentPasswordController,
+                decoration: InputDecoration(labelText: 'Current Password'),
+                obscureText: true,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your current password';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _newPasswordController,
+                decoration: InputDecoration(labelText: 'New Password'),
+                obscureText: true,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a new password';
+                  }
+                  if (value.length < 8) {
+                    return 'Password must be at least 8 characters';
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
         ),
         actions: [
           TextButton(
@@ -136,19 +155,21 @@ class ProfileScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
-              try {
-                await authProvider.changePassword(
-                  _currentPasswordController.text,
-                  _newPasswordController.text,
-                );
-                Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Password changed successfully')),
-                );
-              } catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Failed to change password')),
-                );
+              if (_formKey.currentState!.validate()) {
+                try {
+                  await authProvider.changePassword(
+                    _currentPasswordController.text,
+                    _newPasswordController.text,
+                  );
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Password changed successfully')),
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Failed to change password')),
+                  );
+                }
               }
             },
             child: Text('Save'),
@@ -162,27 +183,58 @@ class ProfileScreen extends StatelessWidget {
     final _nameController = TextEditingController(text: user['name']);
     final _emailController = TextEditingController(text: user['email']);
     final _phoneController = TextEditingController(text: user['phone']);
+    final _formKey = GlobalKey<FormState>();
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Edit Profile'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(labelText: 'Name'),
-            ),
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: _phoneController,
-              decoration: InputDecoration(labelText: 'Phone'),
-            ),
-          ],
+        content: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: 'Name'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: 'Email'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                    return 'Please enter a valid email';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _phoneController,
+                decoration: InputDecoration(labelText: 'Phone'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your phone number';
+                  }
+                  if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                    return 'Please enter a valid phone number';
+                  }
+                  if (!value.startsWith('08')) {
+                    return 'Phone number must start with 08';
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
         ),
         actions: [
           TextButton(
@@ -193,20 +245,22 @@ class ProfileScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
-              try {
-                await authProvider.updateProfile({
-                  'name': _nameController.text,
-                  'email': _emailController.text,
-                  'phone': _phoneController.text,
-                });
-                Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Profile updated successfully')),
-                );
-              } catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Failed to update profile')),
-                );
+              if (_formKey.currentState!.validate()) {
+                try {
+                  await authProvider.updateProfile({
+                    'name': _nameController.text,
+                    'email': _emailController.text,
+                    'phone': _phoneController.text,
+                  });
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Profile updated successfully')),
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Failed to update profile')),
+                  );
+                }
               }
             },
             child: Text('Save'),

@@ -72,28 +72,41 @@ class _TaskScreenState extends State<TaskScreen> {
           : taskProvider.tasks.isEmpty
           ? Center(child: Text('No tasks available.'))
           : ListView.builder(
+        padding: EdgeInsets.all(8.0),
         itemCount: taskProvider.tasks.length,
         itemBuilder: (context, index) {
           final task = taskProvider.tasks[index];
-          return ListTile(
-            title: Text(task.taskName),
-            subtitle: Text(task.description),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    _showEditTaskDialog(task, categoryProvider.categories);
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    _confirmDeleteTask(task);
-                  },
-                ),
-              ],
+          return Card(
+            margin: EdgeInsets.symmetric(vertical: 8.0),
+            elevation: 4.0,
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+              leading: CircleAvatar(
+                backgroundColor: Colors.blue,
+                child: Icon(Icons.task, color: Colors.white),
+              ),
+              title: Text(
+                task.taskName,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(task.description),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.edit, color: Colors.orange),
+                    onPressed: () {
+                      _showEditTaskDialog(task, categoryProvider.categories);
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete, color: Colors.red),
+                    onPressed: () {
+                      _confirmDeleteTask(task);
+                    },
+                  ),
+                ],
+              ),
             ),
           );
         },

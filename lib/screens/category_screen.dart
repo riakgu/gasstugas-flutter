@@ -46,28 +46,41 @@ class _CategoryScreenState extends State<CategoryScreen> {
           : categoryProvider.categories.isEmpty
           ? Center(child: Text('No categories available.'))
           : ListView.builder(
+        padding: EdgeInsets.all(8.0),
         itemCount: categoryProvider.categories.length,
         itemBuilder: (context, index) {
           final category = categoryProvider.categories[index];
-          return ListTile(
-            title: Text(category.categoryName),
-            subtitle: Text(category.description),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    _showEditCategoryDialog(category);
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    _confirmDeleteCategory(category);
-                  },
-                ),
-              ],
+          return Card(
+            margin: EdgeInsets.symmetric(vertical: 8.0),
+            elevation: 4.0,
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+              leading: CircleAvatar(
+                backgroundColor: Colors.blue,
+                child: Icon(Icons.category, color: Colors.white),
+              ),
+              title: Text(
+                category.categoryName,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(category.description),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.edit, color: Colors.orange),
+                    onPressed: () {
+                      _showEditCategoryDialog(category);
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete, color: Colors.red),
+                    onPressed: () {
+                      _confirmDeleteCategory(category);
+                    },
+                  ),
+                ],
+              ),
             ),
           );
         },
