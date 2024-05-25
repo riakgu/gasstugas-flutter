@@ -59,19 +59,23 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             Divider(height: 40),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                ElevatedButton.icon(
-                                  onPressed: () {
-                                    _showEditProfileDialog(context, authProvider, user);
-                                  },
-                                  icon: Icon(Icons.edit),
-                                  label: Text('Edit Profile'),
+                                Expanded(
+                                  child: ElevatedButton.icon(
+                                    onPressed: () {
+                                      _showEditProfileDialog(context, authProvider, user);
+                                    },
+                                    icon: Icon(Icons.edit),
+                                    label: Text('Edit Profile'),
+                                  ),
                                 ),
-                                ElevatedButton.icon(
-                                  onPressed: () => _showChangePasswordDialog(context, authProvider),
-                                  icon: Icon(Icons.lock),
-                                  label: Text('Change Password'),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: ElevatedButton.icon(
+                                    onPressed: () => _showChangePasswordDialog(context, authProvider),
+                                    icon: Icon(Icons.lock),
+                                    label: Text('Change Password'),
+                                  ),
                                 ),
                               ],
                             ),
