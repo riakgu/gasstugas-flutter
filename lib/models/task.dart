@@ -21,7 +21,7 @@ class Task {
     return Task(
       id: json['id'],
       userId: int.parse(json['user_id'].toString()),
-      categoryId: json['category_id'],
+      categoryId: int.parse(json['category_id'].toString()),
       taskName: json['task_name'],
       description: json['description'],
       deadline: json['deadline'],
