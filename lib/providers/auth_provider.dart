@@ -79,7 +79,6 @@ class AuthProvider with ChangeNotifier {
     } catch (e) {
       _isAuthenticated = false;
       _user = null;
-      showSnackBar(e.toString());
     } finally {
       _isLoading = false;
       notifyListeners();
