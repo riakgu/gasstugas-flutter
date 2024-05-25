@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 final task = todayTasks[index];
                 return Container(
-                  width: MediaQuery.of(context).size.width, // Full screen width
+                  width: MediaQuery.of(context).size.width * 0.8, // Full screen width
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
                     child: Padding(
@@ -107,7 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 _buildFeatureItem(context, Icons.chat, 'Chatbot', '/chatbot'),
                 _buildFeatureItem(context, Icons.category, 'Category', '/categories'),
-                _buildFeatureItem(context, Icons.people, 'Users', '/users'),
+                if (user['role'] == 'admin')
+                  _buildFeatureItem(context, Icons.people, 'Users', '/users'), // Only show for admins
               ],
             ),
           ),
