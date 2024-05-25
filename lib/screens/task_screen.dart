@@ -16,13 +16,13 @@ class _TaskScreenState extends State<TaskScreen> {
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _deadlineController = TextEditingController();
-  String? _selectedCategory;
+  int? _selectedCategory;
   String _selectedStatus = 'TO_DO';
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<TaskProvider>(context, listen: false).fetchTasks();
       Provider.of<CategoryProvider>(context, listen: false).fetchCategories();
     });
@@ -49,7 +49,7 @@ class _TaskScreenState extends State<TaskScreen> {
         'description': _descriptionController.text,
         'deadline': _deadlineController.text,
         'status': _selectedStatus,
-        'category_id': _selectedCategory!,
+        'category_id': _selectedCategory,
       };
 
       Provider.of<TaskProvider>(context, listen: false).addTask(taskData);
@@ -107,7 +107,7 @@ class _TaskScreenState extends State<TaskScreen> {
     _nameController.clear();
     _descriptionController.clear();
     _deadlineController.clear();
-    _selectedCategory = categories.isNotEmpty ? categories.first.id.toString() : null;
+    _selectedCategory = categories.isNotEmpty ? categories.first.id : null;
     _selectedStatus = 'TO_DO';
 
     showDialog(
@@ -151,12 +151,12 @@ class _TaskScreenState extends State<TaskScreen> {
                   return null;
                 },
               ),
-              DropdownButtonFormField<String>(
+              DropdownButtonFormField<int>(
                 value: _selectedCategory,
                 decoration: InputDecoration(labelText: 'Category'),
                 items: categories.map((category) {
                   return DropdownMenuItem(
-                    value: category.id.toString(),
+                    value: category.id,
                     child: Text(category.categoryName),
                   );
                 }).toList(),
@@ -166,7 +166,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   });
                 },
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value == null) {
                     return 'Please select a category';
                   }
                   return null;
@@ -216,7 +216,7 @@ class _TaskScreenState extends State<TaskScreen> {
     _nameController.text = task.taskName;
     _descriptionController.text = task.description;
     _deadlineController.text = task.deadline;
-    _selectedCategory = task.categoryId.toString();
+    _selectedCategory = task.categoryId;
     _selectedStatus = task.status;
 
     showDialog(
@@ -260,12 +260,12 @@ class _TaskScreenState extends State<TaskScreen> {
                   return null;
                 },
               ),
-              DropdownButtonFormField<String>(
+              DropdownButtonFormField<int>(
                 value: _selectedCategory,
                 decoration: InputDecoration(labelText: 'Category'),
                 items: categories.map((category) {
                   return DropdownMenuItem(
-                    value: category.id.toString(),
+                    value: category.id,
                     child: Text(category.categoryName),
                   );
                 }).toList(),
@@ -275,7 +275,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   });
                 },
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value == null) {
                     return 'Please select a category';
                   }
                   return null;

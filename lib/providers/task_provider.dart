@@ -32,7 +32,7 @@ class TaskProvider with ChangeNotifier {
     }).toList();
   }
 
-  Future<void> addTask(Map<String, String> taskData) async {
+  Future<void> addTask(Map<String, dynamic> taskData) async {
     _isLoading = true;
     notifyListeners();
 
@@ -47,7 +47,7 @@ class TaskProvider with ChangeNotifier {
     }
   }
 
-  Future<void> updateTask(int id, Map<String, String> taskData) async {
+  Future<void> updateTask(int id, Map<String, dynamic> taskData) async {
     _isLoading = true;
     notifyListeners();
 
