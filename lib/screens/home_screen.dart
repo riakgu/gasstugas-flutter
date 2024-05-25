@@ -35,15 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () async {
-              await authProvider.logout();
-              Navigator.pushReplacementNamed(context, '/login');
-            },
-          ),
-        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 final task = todayTasks[index];
                 return Container(
-                  width: MediaQuery.of(context).size.width * 0.8, // Full screen width
+                  width: MediaQuery.of(context).size.width,
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
                     child: Padding(
