@@ -18,6 +18,7 @@ class CalendarProvider with ChangeNotifier {
     notifyListeners();
 
     try {
+      _events.clear();
       _events = await _calendarService.fetchCalendarEvents();
     } catch (e) {
       print(e);
