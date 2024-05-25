@@ -16,6 +16,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
   void initState() {
     super.initState();
     _selectedDay = _focusedDay;
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Provider.of<CalendarProvider>(context, listen: false).loadEvents();
+    });
   }
 
   @override
