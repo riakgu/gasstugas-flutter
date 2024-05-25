@@ -24,12 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final user = authProvider.user;
     final taskProvider = Provider.of<TaskProvider>(context);
 
-    if (user == null) {
-      return Scaffold(
-        body: Center(child: Text('Error: User data is null')),
-      );
-    }
-
     final todayTasks = taskProvider.getTodayTasks();
 
     return Scaffold(
@@ -98,8 +92,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 _buildFeatureItem(context, Icons.chat, 'Chatbot', '/chatbot'),
                 _buildFeatureItem(context, Icons.category, 'Category', '/categories'),
-                if (user['role'] == 'admin')
-                  _buildFeatureItem(context, Icons.people, 'Users', '/users'), // Only show for admins
+                if (user?['role'] == 'admin')
+                  _buildFeatureItem(context, Icons.people, 'Users', '/users'),
               ],
             ),
           ),
