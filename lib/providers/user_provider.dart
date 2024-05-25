@@ -17,7 +17,7 @@ class UserProvider with ChangeNotifier {
 
     try {
       _users = await _userService.getUsers();
-      showSnackBar('Users fetched successfully!');
+      // showSnackBar('Users fetched successfully!');
     } catch (e) {
       showSnackBar('Failed to fetch users: ${e.toString()}');
     } finally {
