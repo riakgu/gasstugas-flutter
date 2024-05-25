@@ -17,7 +17,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     super.initState();
     _selectedDay = _focusedDay;
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CalendarProvider>(context, listen: false).loadEvents();
     });
   }
@@ -65,7 +65,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
           ),
           const SizedBox(height: 8.0),
           Expanded(
-            child: _buildEventList(calendarProvider.getEventsForDay(_selectedDay!)),
+            child: _selectedDay != null
+                ? _buildEventList(calendarProvider.getEventsForDay(_selectedDay!))
+                : Center(child: Text('Select a day to see events')),
           ),
         ],
       ),
@@ -73,20 +75,30 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   Widget _buildEventList(List<Map<String, dynamic>> events) {
-    return ListView(
-      children: events.map((event) {
-        return Container(
+    if (events.isEmpty) {
+      return Center(
+        child: Text(
+          'No events for selected day',
+          style: TextStyle(fontSize: 16.0, color: Colors.grey),
+        ),
+      );
+    }
+    return ListView.builder(
+      itemCount: events.length,
+      itemBuilder: (context, index) {
+        final event = events[index];
+        return Card(
           margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.blueAccent),
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
+          elevation: 4.0,
           child: ListTile(
             title: Text(event['task_name']),
             subtitle: Text(event['description']),
           ),
         );
-      }).toList(),
+      },
     );
   }
 }
