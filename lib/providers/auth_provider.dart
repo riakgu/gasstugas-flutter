@@ -60,4 +60,22 @@ class AuthProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> updateProfile(Map<String, String> userData) async {
+    try {
+      final data = await _authService.updateProfile(userData);
+      _user = data;
+      notifyListeners();
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<void> changePassword(String currentPassword, String newPassword) async {
+    try {
+      await _authService.changePassword(currentPassword, newPassword);
+    } catch (e) {
+      throw e;
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'calendar_screen.dart';
 import 'task_screen.dart';
+import 'profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(),
     TaskScreen(),
     CalendarScreen(),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -40,6 +42,10 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today),
             label: 'Calendar',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,

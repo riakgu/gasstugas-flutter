@@ -75,4 +75,45 @@ class AuthService {
       throw Exception(data['message']);
     }
   }
+
+  Future<Map<String, dynamic>> updateProfile(Map<String, String> userData) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    final response = await http.put(
+      Uri.parse('$baseUrl/auth/update-profile'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      body: userData,
+    );
+
+    final data = json.decode(response.body);
+    if (response.statusCode == 200) {
+      return data['data'];
+    } else {
+      throw Exception(data['message']);
+    }
+  }
+
+  Future<void> changePassword(String currentPassword, String newPassword) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    final response = await http.put(
+      Uri.parse('$baseUrl/auth/change-password'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      body: {
+        'current_password': currentPassword,
+        'new_password': newPassword,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      final data = json.decode(response.body);
+      throw Exception(data['message']);
+    }
+  }
 }

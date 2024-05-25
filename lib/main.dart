@@ -15,6 +15,7 @@ import 'screens/calendar_screen.dart';
 import 'screens/category_screen.dart';
 import 'screens/task_screen.dart';
 import 'screens/user_screen.dart';
+import 'screens/profile_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
           '/categories': (context) => CategoryScreen(),
           '/tasks': (context) => TaskScreen(),
           '/users': (context) => UserScreen(),
+          '/profile': (context) => ProfileScreen(),
         },
       ),
     );
