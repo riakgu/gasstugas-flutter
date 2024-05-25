@@ -17,7 +17,7 @@ class CategoryProvider with ChangeNotifier {
     try {
       _categories = await _categoryService.getCategories();
     } catch (e) {
-      // Handle error
+      print(e);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -32,7 +32,7 @@ class CategoryProvider with ChangeNotifier {
       final newCategory = await _categoryService.createCategory(categoryData);
       _categories.add(newCategory);
     } catch (e) {
-      // Handle error
+      print(e);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -46,9 +46,11 @@ class CategoryProvider with ChangeNotifier {
     try {
       final updatedCategory = await _categoryService.updateCategory(id, categoryData);
       final index = _categories.indexWhere((category) => category.id == id);
-      _categories[index] = updatedCategory;
+      if (index != -1) {
+        _categories[index] = updatedCategory;
+      }
     } catch (e) {
-      // Handle error
+      print(e);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -63,7 +65,7 @@ class CategoryProvider with ChangeNotifier {
       await _categoryService.deleteCategory(id);
       _categories.removeWhere((category) => category.id == id);
     } catch (e) {
-      // Handle error
+      print(e);
     } finally {
       _isLoading = false;
       notifyListeners();

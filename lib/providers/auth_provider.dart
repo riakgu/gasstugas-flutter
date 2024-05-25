@@ -16,38 +16,58 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
+    _isLoading = true;
+    notifyListeners();
+
     try {
       final data = await _authService.login(email, password);
-      _user = data['data']['user'];
+      _user = data['user'];
       _isAuthenticated = true;
-      notifyListeners();
-      // Load profile after login to ensure state consistency
-      await loadProfile();
+      await loadProfile(); // Ensure state consistency by loading profile after login
     } catch (e) {
-      throw e;
+      _isAuthenticated = false;
+      _user = null;
+      print(e);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
   Future<void> register(Map<String, String> user) async {
+    _isLoading = true;
+    notifyListeners();
+
     try {
       await _authService.register(user);
     } catch (e) {
-      throw e;
+      print(e);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
   Future<void> logout() async {
+    _isLoading = true;
+    notifyListeners();
+
     try {
       await _authService.logout();
       _isAuthenticated = false;
       _user = null;
-      notifyListeners();
     } catch (e) {
-      throw e;
+      print(e);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
   Future<void> loadProfile() async {
+    _isLoading = true;
+    notifyListeners();
+
     try {
       final data = await _authService.getProfile();
       _user = data;
@@ -55,6 +75,7 @@ class AuthProvider with ChangeNotifier {
     } catch (e) {
       _isAuthenticated = false;
       _user = null;
+      print(e);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -62,20 +83,31 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> updateProfile(Map<String, String> userData) async {
+    _isLoading = true;
+    notifyListeners();
+
     try {
       final data = await _authService.updateProfile(userData);
       _user = data;
-      notifyListeners();
     } catch (e) {
-      throw e;
+      print(e);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
   Future<void> changePassword(String currentPassword, String newPassword) async {
+    _isLoading = true;
+    notifyListeners();
+
     try {
       await _authService.changePassword(currentPassword, newPassword);
     } catch (e) {
-      throw e;
+      print(e);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
 }

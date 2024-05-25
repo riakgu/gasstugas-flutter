@@ -17,7 +17,7 @@ class TaskProvider with ChangeNotifier {
     try {
       _tasks = await _taskService.getTasks();
     } catch (e) {
-      print('Error fetching tasks: $e');
+      print(e);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -40,7 +40,7 @@ class TaskProvider with ChangeNotifier {
       final newTask = await _taskService.createTask(taskData);
       _tasks.add(newTask);
     } catch (e) {
-      print('Error adding task: $e');
+      print(e);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -58,7 +58,7 @@ class TaskProvider with ChangeNotifier {
         _tasks[index] = updatedTask;
       }
     } catch (e) {
-      print('Error updating task: $e');
+      print(e);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -73,7 +73,7 @@ class TaskProvider with ChangeNotifier {
       await _taskService.deleteTask(id);
       _tasks.removeWhere((task) => task.id == id);
     } catch (e) {
-      print('Error deleting task: $e');
+      print(e);
     } finally {
       _isLoading = false;
       notifyListeners();

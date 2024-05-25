@@ -19,9 +19,8 @@ class CalendarProvider with ChangeNotifier {
 
     try {
       _events = await _calendarService.fetchCalendarEvents();
-      print('Events Loaded from API: $_events');
     } catch (e) {
-      print('Error Loading Events: $e');
+      print(e);
     } finally {
       _isLoading = false;
       notifyListeners();
