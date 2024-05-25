@@ -65,6 +65,7 @@ class _TaskScreenState extends State<TaskScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Tasks'),
+        automaticallyImplyLeading: false,
       ),
       body: taskProvider.isLoading || categoryProvider.isLoading
           ? Center(child: CircularProgressIndicator())

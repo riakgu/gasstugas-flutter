@@ -35,6 +35,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Calendar'),
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [
