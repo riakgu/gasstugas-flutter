@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/category.dart';
 import '../services/category_service.dart';
+import '../utils/snackbar.dart';
 
 class CategoryProvider with ChangeNotifier {
   final CategoryService _categoryService = CategoryService();
@@ -16,8 +17,9 @@ class CategoryProvider with ChangeNotifier {
 
     try {
       _categories = await _categoryService.getCategories();
+      // showSnackBar('Categories fetched successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar('Failed to fetch categories: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -31,8 +33,9 @@ class CategoryProvider with ChangeNotifier {
     try {
       final newCategory = await _categoryService.createCategory(categoryData);
       _categories.add(newCategory);
+      showSnackBar('Category added successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar('Failed to add category: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -49,8 +52,9 @@ class CategoryProvider with ChangeNotifier {
       if (index != -1) {
         _categories[index] = updatedCategory;
       }
+      showSnackBar('Category updated successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar('Failed to update category: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -64,8 +68,9 @@ class CategoryProvider with ChangeNotifier {
     try {
       await _categoryService.deleteCategory(id);
       _categories.removeWhere((category) => category.id == id);
+      showSnackBar('Category deleted successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar('Failed to delete category: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();

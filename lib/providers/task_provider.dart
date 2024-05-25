@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/task.dart';
 import '../services/task_service.dart';
+import '../utils/snackbar.dart';
 
 class TaskProvider with ChangeNotifier {
   final TaskService _taskService = TaskService();
@@ -16,8 +17,9 @@ class TaskProvider with ChangeNotifier {
 
     try {
       _tasks = await _taskService.getTasks();
+      // showSnackBar('Tasks fetched successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar('Failed to fetch tasks: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -39,8 +41,9 @@ class TaskProvider with ChangeNotifier {
     try {
       final newTask = await _taskService.createTask(taskData);
       _tasks.add(newTask);
+      showSnackBar('Task added successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar('Failed to add task: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -57,8 +60,9 @@ class TaskProvider with ChangeNotifier {
       if (index != -1) {
         _tasks[index] = updatedTask;
       }
+      showSnackBar('Task updated successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar('Failed to update task: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -72,8 +76,9 @@ class TaskProvider with ChangeNotifier {
     try {
       await _taskService.deleteTask(id);
       _tasks.removeWhere((task) => task.id == id);
+      showSnackBar('Task deleted successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar('Failed to delete task: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();

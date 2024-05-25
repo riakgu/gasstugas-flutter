@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/user_service.dart';
 import '../models/user.dart';
+import '../utils/snackbar.dart';
 
 class UserProvider with ChangeNotifier {
   final UserService _userService = UserService();
@@ -16,8 +17,9 @@ class UserProvider with ChangeNotifier {
 
     try {
       _users = await _userService.getUsers();
+      showSnackBar('Users fetched successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar('Failed to fetch users: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -31,8 +33,9 @@ class UserProvider with ChangeNotifier {
     try {
       final newUser = await _userService.createUser(userData);
       _users.add(newUser);
+      showSnackBar('User added successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar('Failed to add user: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -46,9 +49,12 @@ class UserProvider with ChangeNotifier {
     try {
       final updatedUser = await _userService.updateUser(id, userData);
       final index = _users.indexWhere((user) => user.id == id);
-      _users[index] = updatedUser;
+      if (index != -1) {
+        _users[index] = updatedUser;
+      }
+      showSnackBar('User updated successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar('Failed to update user: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -62,8 +68,9 @@ class UserProvider with ChangeNotifier {
     try {
       await _userService.deleteUser(id);
       _users.removeWhere((user) => user.id == id);
+      showSnackBar('User deleted successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar('Failed to delete user: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();

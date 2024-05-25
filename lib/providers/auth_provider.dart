@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import '../utils/snackbar.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthService _authService = AuthService();
@@ -24,10 +25,11 @@ class AuthProvider with ChangeNotifier {
       _user = data['user'];
       _isAuthenticated = true;
       await loadProfile(); // Ensure state consistency by loading profile after login
+      showSnackBar('Login successful!');
     } catch (e) {
       _isAuthenticated = false;
       _user = null;
-      print(e);
+      showSnackBar(e.toString());
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -39,9 +41,10 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      await _authService.register(user);
+      final data = await _authService.register(user);
+      showSnackBar(data['message'] ?? 'Registration successful!');
     } catch (e) {
-      print(e);
+      showSnackBar(e.toString());
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -56,8 +59,9 @@ class AuthProvider with ChangeNotifier {
       await _authService.logout();
       _isAuthenticated = false;
       _user = null;
+      showSnackBar('Logout successful!');
     } catch (e) {
-      print(e);
+      showSnackBar(e.toString());
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -75,7 +79,7 @@ class AuthProvider with ChangeNotifier {
     } catch (e) {
       _isAuthenticated = false;
       _user = null;
-      print(e);
+      showSnackBar(e.toString());
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -89,8 +93,9 @@ class AuthProvider with ChangeNotifier {
     try {
       final data = await _authService.updateProfile(userData);
       _user = data;
+      showSnackBar('Profile updated successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar(e.toString());
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -103,8 +108,9 @@ class AuthProvider with ChangeNotifier {
 
     try {
       await _authService.changePassword(currentPassword, newPassword);
+      showSnackBar('Password changed successfully!');
     } catch (e) {
-      print(e);
+      showSnackBar(e.toString());
     } finally {
       _isLoading = false;
       notifyListeners();
