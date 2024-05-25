@@ -56,7 +56,8 @@ class AuthService {
 
     if (response.statusCode == 200) {
       final prefs = await SharedPreferences.getInstance();
-      prefs.remove('token');
+      await prefs.remove('token');
+      await prefs.clear();
     } else {
       throw Exception('Failed to logout');
     }
