@@ -36,9 +36,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ));
       }
 
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -63,7 +65,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     // height: 100,
                     width: 250,
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 75),
                   TextFormField(
                     controller: _nameController,
                     decoration: InputDecoration(labelText: 'Name'),
@@ -74,6 +76,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 20),
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(labelText: 'Email'),
@@ -87,6 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 20),
                   TextFormField(
                     controller: _phoneController,
                     decoration: InputDecoration(labelText: 'Phone'),
@@ -103,6 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 20),
                   TextFormField(
                     controller: _passwordController,
                     decoration: InputDecoration(labelText: 'Password'),
@@ -117,7 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 75),
                   _isLoading
                       ? CircularProgressIndicator()
                       : ElevatedButton(

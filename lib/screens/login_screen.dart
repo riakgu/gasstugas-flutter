@@ -61,10 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Image.asset(
                     'assets/logo.png',
-                    // height: 100,
                     width: 250,
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 75),
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(labelText: 'Email'),
@@ -78,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 20),
                   TextFormField(
                     controller: _passwordController,
                     decoration: InputDecoration(labelText: 'Password'),
@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 75),
                   _isLoading
                       ? CircularProgressIndicator()
                       : ElevatedButton(
