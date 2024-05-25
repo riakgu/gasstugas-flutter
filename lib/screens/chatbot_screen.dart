@@ -25,10 +25,32 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
               itemCount: chatProvider.messages.length,
               itemBuilder: (context, index) {
                 final message = chatProvider.messages[index];
-                return ListTile(
-                  title: Text(message['role'] == 'user' ? 'You' : 'Chatbot'),
-                  subtitle: Text(message['content']!) ,
-                  tileColor: message['role'] == 'user' ? Colors.blue[50] : Colors.grey[200],
+                final isUserMessage = message['role'] == 'user';
+
+                return Align(
+                  alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: isUserMessage ? Colors.blue[50] : Colors.grey[200],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          isUserMessage ? 'You' : 'ChatGPT',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: isUserMessage ? Colors.blue : Colors.black,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(message['content']!),
+                      ],
+                    ),
+                  ),
                 );
               },
             ),
@@ -42,11 +64,14 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                     controller: _controller,
                     decoration: InputDecoration(
                       hintText: 'Type your message...',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send),
+                  icon: Icon(Icons.send, color: Colors.blue),
                   onPressed: () {
                     if (_controller.text.isNotEmpty) {
                       chatProvider.sendMessage(_controller.text);
