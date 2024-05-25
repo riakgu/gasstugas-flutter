@@ -18,9 +18,6 @@ class TaskService {
       },
     );
 
-    print('Status ${response.statusCode}');
-    print('Response body: ${response.body}');
-
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body)['data'];
       return data.map((json) => Task.fromJson(json)).toList();
@@ -40,9 +37,6 @@ class TaskService {
       },
       body: taskData,
     );
-
-    print('Status ${response.statusCode}');
-    print('Response body: ${response.body}');
 
     if (response.statusCode == 201) {
       final data = json.decode(response.body)['data'];
@@ -64,9 +58,6 @@ class TaskService {
       body: taskData,
     );
 
-    print('Status ${response.statusCode}');
-    print('Response body: ${response.body}');
-
     if (response.statusCode == 200) {
       final data = json.decode(response.body)['data'];
       return Task.fromJson(data);
@@ -85,8 +76,6 @@ class TaskService {
         'Authorization': 'Bearer $token',
       },
     );
-    print('Status ${response.statusCode}');
-    print('Response body: ${response.body}');
 
     if (response.statusCode != 200) {
       throw Exception('Failed to delete task');
