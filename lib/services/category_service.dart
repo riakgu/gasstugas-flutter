@@ -7,9 +7,13 @@ import '../config/config.dart';
 class CategoryService {
   final String baseUrl = Config.baseUrl;
 
-  Future<List<Category>> getCategories() async {
+  Future<String?> _getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    return prefs.getString('token');
+  }
+
+  Future<List<Category>> getCategories() async {
+    final token = await _getToken();
 
     final response = await http.get(
       Uri.parse('$baseUrl/categories'),
@@ -19,7 +23,7 @@ class CategoryService {
     );
 
     if (response.statusCode == 200) {
-      final data = json.decode(response.body)['data'] as List;
+      final List<dynamic> data = json.decode(response.body)['data'];
       return data.map((json) => Category.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load categories');
@@ -27,8 +31,7 @@ class CategoryService {
   }
 
   Future<Category> createCategory(Map<String, String> category) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    final token = await _getToken();
 
     final response = await http.post(
       Uri.parse('$baseUrl/categories'),
@@ -48,8 +51,7 @@ class CategoryService {
   }
 
   Future<Category> updateCategory(int id, Map<String, String> category) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    final token = await _getToken();
 
     final response = await http.put(
       Uri.parse('$baseUrl/categories/$id'),
@@ -69,8 +71,7 @@ class CategoryService {
   }
 
   Future<void> deleteCategory(int id) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    final token = await _getToken();
 
     final response = await http.delete(
       Uri.parse('$baseUrl/categories/$id'),

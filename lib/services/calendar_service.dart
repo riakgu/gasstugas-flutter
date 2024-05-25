@@ -6,9 +6,13 @@ import '../config/config.dart';
 class CalendarService {
   final String baseUrl = Config.baseUrl;
 
-  Future<Map<DateTime, List<Map<String, dynamic>>>> fetchCalendarEvents() async {
+  Future<String?> _getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    return prefs.getString('token');
+  }
+
+  Future<Map<DateTime, List<Map<String, dynamic>>>> fetchCalendarEvents() async {
+    final token = await _getToken();
 
     if (token == null) {
       throw Exception('Authentication token not found');

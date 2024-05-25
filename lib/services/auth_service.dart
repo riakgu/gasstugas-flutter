@@ -6,6 +6,11 @@ import '../config/config.dart';
 class AuthService {
   final String baseUrl = Config.baseUrl;
 
+  Future<String?> _getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
   Future<Map<String, dynamic>> login(String email, String password) async {
     final response = await http.post(
       Uri.parse('$baseUrl/auth/login'),
@@ -15,13 +20,13 @@ class AuthService {
       },
     );
 
-    final data = json.decode(response.body);
     if (response.statusCode == 200) {
+      final data = json.decode(response.body)['data'];
       final prefs = await SharedPreferences.getInstance();
-      prefs.setString('token', data['data']['token']);
+      prefs.setString('token', data['token']);
       return data;
     } else {
-      throw Exception(data['message']);
+      throw Exception('Failed to login');
     }
   }
 
@@ -31,17 +36,16 @@ class AuthService {
       body: user,
     );
 
-    final data = json.decode(response.body);
     if (response.statusCode == 201) {
+      final data = json.decode(response.body)['data'];
       return data;
     } else {
-      throw Exception(data['message']);
+      throw Exception('Failed to register');
     }
   }
 
   Future<void> logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    final token = await _getToken();
 
     final response = await http.post(
       Uri.parse('$baseUrl/auth/logout'),
@@ -51,6 +55,7 @@ class AuthService {
     );
 
     if (response.statusCode == 200) {
+      final prefs = await SharedPreferences.getInstance();
       prefs.remove('token');
     } else {
       throw Exception('Failed to logout');
@@ -58,8 +63,7 @@ class AuthService {
   }
 
   Future<Map<String, dynamic>> getProfile() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    final token = await _getToken();
 
     final response = await http.get(
       Uri.parse('$baseUrl/auth'),
@@ -68,17 +72,16 @@ class AuthService {
       },
     );
 
-    final data = json.decode(response.body);
     if (response.statusCode == 200) {
-      return data['data'];
+      final data = json.decode(response.body)['data'];
+      return data;
     } else {
-      throw Exception(data['message']);
+      throw Exception('Failed to load profile');
     }
   }
 
   Future<Map<String, dynamic>> updateProfile(Map<String, String> userData) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    final token = await _getToken();
 
     final response = await http.put(
       Uri.parse('$baseUrl/auth/update-profile'),
@@ -88,17 +91,16 @@ class AuthService {
       body: userData,
     );
 
-    final data = json.decode(response.body);
     if (response.statusCode == 200) {
-      return data['data'];
+      final data = json.decode(response.body)['data'];
+      return data;
     } else {
-      throw Exception(data['message']);
+      throw Exception('Failed to update profile');
     }
   }
 
   Future<void> changePassword(String currentPassword, String newPassword) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    final token = await _getToken();
 
     final response = await http.put(
       Uri.parse('$baseUrl/auth/change-password'),
@@ -111,11 +113,8 @@ class AuthService {
       },
     );
 
-    print(response.body);
-
     if (response.statusCode != 200) {
-      final data = json.decode(response.body);
-      throw Exception(data['message']);
+      throw Exception('Failed to change password');
     }
   }
 }

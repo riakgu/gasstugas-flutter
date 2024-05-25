@@ -6,9 +6,13 @@ import '../config/config.dart';
 class ChatService {
   final String baseUrl = Config.baseUrl;
 
-  Future<Map<String, dynamic>> sendMessage(String message) async {
+  Future<String?> _getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    return prefs.getString('token');
+  }
+
+  Future<Map<String, dynamic>> sendMessage(String message) async {
+    final token = await _getToken();
 
     if (token == null) {
       throw Exception('Authentication token not found');

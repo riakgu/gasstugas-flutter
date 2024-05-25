@@ -20,8 +20,6 @@ class UserService {
         'Authorization': 'Bearer $token',
       },
     );
-    print('GET /users response: ${response.statusCode}');
-    print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body)['data'];
@@ -40,8 +38,6 @@ class UserService {
       },
       body: userData,
     );
-    print('POST /users response: ${response.statusCode}');
-    print('Response body: ${response.body}');
 
     if (response.statusCode == 201) {
       final data = json.decode(response.body)['data'];
@@ -60,8 +56,6 @@ class UserService {
       },
       body: userData,
     );
-    print('PUT /users/$id response: ${response.statusCode}');
-    print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body)['data'];
@@ -79,8 +73,6 @@ class UserService {
         'Authorization': 'Bearer $token',
       },
     );
-    print('DELETE /users/$id response: ${response.statusCode}');
-    print('Response body: ${response.body}');
 
     if (response.statusCode != 200) {
       throw Exception('Failed to delete user');
