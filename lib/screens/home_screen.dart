@@ -93,6 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 _buildFeatureItem(context, Icons.chat, 'Chatbot', '/chatbot'),
                 _buildFeatureItem(context, Icons.category, 'Category', '/categories'),
+                _buildFeatureItem(context, Icons.map, 'Map', '/map'),
                 if (user?['role'] == 'admin')
                   _buildFeatureItem(context, Icons.people, 'Users', '/users'),
               ],

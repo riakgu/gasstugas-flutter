@@ -15,6 +15,7 @@ import 'screens/category_screen.dart';
 import 'screens/task_screen.dart';
 import 'screens/user_screen.dart';
 import 'screens/profile_screen.dart';
+import 'screens/map_screen.dart';
 import 'utils/snackbar.dart';
 
 void main() {
@@ -62,6 +63,8 @@ class MyApp extends StatelessWidget {
           '/tasks': (context) => TaskScreen(),
           '/users': (context) => UserScreen(),
           '/profile': (context) => ProfileScreen(),
+          '/map': (context) => MapScreen(),
+
         },
       ),
     );
