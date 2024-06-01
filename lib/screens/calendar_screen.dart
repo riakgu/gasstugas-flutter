@@ -57,6 +57,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
             },
             calendarStyle: CalendarStyle(
               markersMaxCount: 1,
+              selectedDecoration: BoxDecoration(
+                color: Color(0xFF5B0B0E),
+                shape: BoxShape.circle,
+              ),
+              todayDecoration: BoxDecoration(
+                color: Color(0xFF5B0B0E).withOpacity(0.5),
+                shape: BoxShape.circle,
+              ),
             ),
             headerStyle: HeaderStyle(
               formatButtonVisible: false,
@@ -67,7 +75,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           Expanded(
             child: _selectedDay != null
                 ? _buildEventList(
-                    calendarProvider.getEventsForDay(_selectedDay!))
+                calendarProvider.getEventsForDay(_selectedDay!))
                 : Center(child: Text('Select a day to see events')),
           ),
         ],
