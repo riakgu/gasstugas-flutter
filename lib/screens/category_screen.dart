@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import '../providers/category_provider.dart';
 import '../models/category.dart';
@@ -28,7 +30,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
         'description': _descriptionController.text,
       };
 
-      Provider.of<CategoryProvider>(context, listen: false).addCategory(categoryData);
+      Provider.of<CategoryProvider>(context, listen: false)
+          .addCategory(categoryData);
       Navigator.pop(context);
     }
   }
@@ -44,50 +47,53 @@ class _CategoryScreenState extends State<CategoryScreen> {
       body: categoryProvider.isLoading
           ? Center(child: CircularProgressIndicator())
           : categoryProvider.categories.isEmpty
-          ? Center(child: Text('No categories available.'))
-          : ListView.builder(
-        padding: EdgeInsets.all(8.0),
-        itemCount: categoryProvider.categories.length,
-        itemBuilder: (context, index) {
-          final category = categoryProvider.categories[index];
-          return Card(
-            margin: EdgeInsets.symmetric(vertical: 8.0),
-            elevation: 4.0,
-            child: ListTile(
-              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-              leading: CircleAvatar(
-                backgroundColor: Colors.blue,
-                child: Icon(Icons.category, color: Colors.white),
-              ),
-              title: Text(
-                category.categoryName,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(category.description),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.edit, color: Colors.orange),
-                    onPressed: () {
-                      _showEditCategoryDialog(category);
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red),
-                    onPressed: () {
-                      _confirmDeleteCategory(category);
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
+              ? Center(child: Text('No categories available.'))
+              : ListView.builder(
+                  padding: EdgeInsets.all(8.0),
+                  itemCount: categoryProvider.categories.length,
+                  itemBuilder: (context, index) {
+                    final category = categoryProvider.categories[index];
+                    return Card(
+                      margin: EdgeInsets.symmetric(vertical: 8.0),
+                      elevation: 4.0,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 16.0),
+                        leading: CircleAvatar(
+                          backgroundColor: Color(0xFF5B0B0E),
+                          child: Icon(Iconsax.category_2, color: Colors.white),
+                        ),
+                        title: Text(
+                          category.categoryName,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(category.description),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: Icon(Iconsax.edit_2_copy,
+                                  color: Colors.lightBlue),
+                              onPressed: () {
+                                _showEditCategoryDialog(category);
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Ionicons.trash_bin, color: Colors.red),
+                              onPressed: () {
+                                _confirmDeleteCategory(category);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xFF5B0B0E),
         onPressed: _showAddCategoryDialog,
-        child: Icon(Icons.add),
+        child: Icon(Ionicons.add_sharp, color: Colors.white),
         tooltip: 'Add Category',
       ),
     );
@@ -100,7 +106,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Add Category'),
+        backgroundColor: Color.fromARGB(255, 80, 36, 36),
+        title: Text('Add Category', style: TextStyle(color: Colors.white)),
         content: Form(
           key: _formKey,
           child: Column(
@@ -108,7 +115,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
             children: [
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(labelText: 'Category Name'),
+                decoration: InputDecoration(
+                    labelText: 'Category Name',
+                    labelStyle: TextStyle(color: Colors.white)),
+                style: TextStyle(color: Colors.white),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a category name';
@@ -118,7 +128,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ),
               TextFormField(
                 controller: _descriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: InputDecoration(
+                    labelText: 'Description',
+                    labelStyle: TextStyle(color: Colors.white)),
+                style: TextStyle(color: Colors.white),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a description';
@@ -134,11 +147,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('Cancel'),
+            child: Text('Cancel', style: TextStyle(color: Colors.white)),
           ),
           TextButton(
             onPressed: _submitForm,
-            child: Text('Add'),
+            child: Text('Add', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

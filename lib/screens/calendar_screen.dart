@@ -63,10 +63,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
               titleCentered: true,
             ),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 20.0),
           Expanded(
             child: _selectedDay != null
-                ? _buildEventList(calendarProvider.getEventsForDay(_selectedDay!))
+                ? _buildEventList(
+                    calendarProvider.getEventsForDay(_selectedDay!))
                 : Center(child: Text('Select a day to see events')),
           ),
         ],
@@ -88,14 +89,21 @@ class _CalendarScreenState extends State<CalendarScreen> {
       itemBuilder: (context, index) {
         final event = events[index];
         return Card(
+          color: Color(0xFF5B0B0E),
           margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
           elevation: 4.0,
           child: ListTile(
-            title: Text(event['task_name']),
-            subtitle: Text(event['description']),
+            title: Text(
+              event['task_name'],
+              style: TextStyle(color: Colors.white), // Atur warna teks title
+            ),
+            subtitle: Text(
+              event['description'],
+              style: TextStyle(color: Colors.white), // Atur warna teks subtitle
+            ),
           ),
         );
       },

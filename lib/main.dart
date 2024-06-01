@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:provider/provider.dart';
 import 'providers/auth_provider.dart';
 import 'providers/chat_provider.dart';
@@ -99,25 +100,25 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Iconsax.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.task),
+            icon: Icon(Iconsax.task),
             label: 'Tasks',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
+            icon: Icon(Iconsax.calendar),
             label: 'Calendar',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Iconsax.user),
             label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor:  Color(0xFF5B0B0E),
+        unselectedItemColor: Colors.black,
         showUnselectedLabels: true,
         onTap: _onItemTapped,
       ),

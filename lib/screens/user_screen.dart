@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/scheduler.dart';
 import '../providers/user_provider.dart';
@@ -78,13 +80,13 @@ class _UserScreenState extends State<UserScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.edit, color: Colors.orange),
+                    icon: Icon(Iconsax.edit_2_copy, color: Colors.lightBlue),
                     onPressed: () {
                       _showEditUserDialog(user);
                     },
                   ),
                   IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red),
+                    icon: Icon(Ionicons.trash_bin, color: Colors.red),
                     onPressed: () {
                       _confirmDeleteUser(user);
                     },

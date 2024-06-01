@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:provider/provider.dart';
 import '../providers/chat_provider.dart';
 
@@ -43,7 +44,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                           isUserMessage ? 'You' : 'ChatGPT',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: isUserMessage ? Colors.blue : Colors.black,
+                            color: isUserMessage ? Color(0xFF5B0B0E) : Colors.black,
                           ),
                         ),
                         SizedBox(height: 5),
@@ -71,7 +72,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send, color: Colors.blue),
+                  icon: Icon(Iconsax.send_1, color: Color(0xFF5B0B0E)),
                   onPressed: () {
                     if (_controller.text.isNotEmpty) {
                       chatProvider.sendMessage(_controller.text);

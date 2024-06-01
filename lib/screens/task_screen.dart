@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../providers/task_provider.dart';
@@ -54,6 +56,7 @@ class _TaskScreenState extends State<TaskScreen> {
 
       Provider.of<TaskProvider>(context, listen: false).addTask(taskData);
       Navigator.pop(context);
+      
     }
   }
 
@@ -70,50 +73,54 @@ class _TaskScreenState extends State<TaskScreen> {
       body: taskProvider.isLoading || categoryProvider.isLoading
           ? Center(child: CircularProgressIndicator())
           : taskProvider.tasks.isEmpty
-          ? Center(child: Text('No tasks available.'))
-          : ListView.builder(
-        padding: EdgeInsets.all(8.0),
-        itemCount: taskProvider.tasks.length,
-        itemBuilder: (context, index) {
-          final task = taskProvider.tasks[index];
-          return Card(
-            margin: EdgeInsets.symmetric(vertical: 8.0),
-            elevation: 4.0,
-            child: ListTile(
-              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-              leading: CircleAvatar(
-                backgroundColor: Colors.blue,
-                child: Icon(Icons.task, color: Colors.white),
-              ),
-              title: Text(
-                task.taskName,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(task.description),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.edit, color: Colors.orange),
-                    onPressed: () {
-                      _showEditTaskDialog(task, categoryProvider.categories);
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red),
-                    onPressed: () {
-                      _confirmDeleteTask(task);
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
+              ? Center(child: Text('No tasks available.'))
+              : ListView.builder(
+                  padding: EdgeInsets.all(8.0),
+                  itemCount: taskProvider.tasks.length,
+                  itemBuilder: (context, index) {
+                    final task = taskProvider.tasks[index];
+                    return Card(
+                      margin: EdgeInsets.symmetric(vertical: 8.0),
+                      elevation: 4.0,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 16.0),
+                        leading: CircleAvatar(
+                          backgroundColor: Color(0xFF5B0B0E),
+                          child: Icon(Iconsax.task, color: Colors.white),
+                        ),
+                        title: Text(
+                          task.taskName,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(task.description),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: Icon(Iconsax.edit_2_copy,
+                                  color: Colors.lightBlue),
+                              onPressed: () {
+                                _showEditTaskDialog(
+                                    task, categoryProvider.categories);
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Ionicons.trash_bin, color: Colors.red),
+                              onPressed: () {
+                                _confirmDeleteTask(task);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddTaskDialog(categoryProvider.categories),
-        child: Icon(Icons.add),
+        backgroundColor: Color(0xFF5B0B0E), // Warna latar belakang
+        child: Icon(Ionicons.add_sharp, color: Colors.white), // Warna ikon
         tooltip: 'Add Task',
       ),
     );
@@ -129,7 +136,8 @@ class _TaskScreenState extends State<TaskScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Add Task'),
+        backgroundColor: Color.fromARGB(255, 80, 36, 36),
+        title: Text('Add Task', style: TextStyle(color: Colors.white)),
         content: Form(
           key: _formKey,
           child: Column(
@@ -137,7 +145,8 @@ class _TaskScreenState extends State<TaskScreen> {
             children: [
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(labelText: 'Task Name'),
+                decoration: InputDecoration(labelText: 'Task Name',  labelStyle: TextStyle(color: Colors.white)),
+                 style: TextStyle(color: Colors.white),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a task name';
@@ -147,7 +156,8 @@ class _TaskScreenState extends State<TaskScreen> {
               ),
               TextFormField(
                 controller: _descriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: InputDecoration(labelText: 'Description', labelStyle: TextStyle(color: Colors.white)),
+                style: TextStyle(color: Colors.white),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a description';
@@ -157,7 +167,8 @@ class _TaskScreenState extends State<TaskScreen> {
               ),
               TextFormField(
                 controller: _deadlineController,
-                decoration: InputDecoration(labelText: 'Deadline'),
+                decoration: InputDecoration(labelText: 'Deadline', labelStyle: TextStyle(color: Colors.white)),
+                style: TextStyle(color: Colors.white),
                 readOnly: true,
                 onTap: () => _selectDeadline(context),
                 validator: (value) {
@@ -169,11 +180,12 @@ class _TaskScreenState extends State<TaskScreen> {
               ),
               DropdownButtonFormField<int>(
                 value: _selectedCategory,
-                decoration: InputDecoration(labelText: 'Category'),
+                decoration: InputDecoration(labelText: 'Category', labelStyle: TextStyle(color: Colors.white)),
+                style: TextStyle(color: Colors.black),
                 items: categories.map((category) {
                   return DropdownMenuItem(
                     value: category.id,
-                    child: Text(category.categoryName),
+                    child: Text(category.categoryName, style: TextStyle(color: const Color.fromARGB(255, 3, 3, 3))),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -190,11 +202,12 @@ class _TaskScreenState extends State<TaskScreen> {
               ),
               DropdownButtonFormField<String>(
                 value: _selectedStatus,
-                decoration: InputDecoration(labelText: 'Status'),
+                decoration: InputDecoration(labelText: 'Status', labelStyle: TextStyle(color: Colors.white)),
+                 
                 items: ['TO_DO', 'IN_PROGRESS', 'DONE'].map((status) {
                   return DropdownMenuItem(
                     value: status,
-                    child: Text(status),
+                    child: Text(status, style: TextStyle(color: Color.fromARGB(255, 8, 8, 8))),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -217,11 +230,11 @@ class _TaskScreenState extends State<TaskScreen> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('Cancel'),
+            child: Text('Cancel', style: TextStyle(color: Colors.white)),
           ),
           TextButton(
             onPressed: _submitForm,
-            child: Text('Add'),
+            child: Text('Add', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -378,4 +391,5 @@ class _TaskScreenState extends State<TaskScreen> {
       ),
     );
   }
+  
 }
