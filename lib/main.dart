@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:provider/provider.dart';
+import 'models/task.dart';
 import 'providers/auth_provider.dart';
 import 'providers/chat_provider.dart';
 import 'providers/calendar_provider.dart';
@@ -95,6 +96,18 @@ class _MainScreenState extends State<MainScreen> {
       _selectedIndex = index;
     });
   }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final taskProvider = Provider.of<TaskProvider>(context, listen: false);
+      taskProvider.fetchTasks().then((_) {
+        NotificationService().scheduleDailyTaskReminders(taskProvider.incompleteTasks);
+      });
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {

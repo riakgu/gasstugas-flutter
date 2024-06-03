@@ -8,9 +8,13 @@ class TaskProvider with ChangeNotifier {
   final TaskService _taskService = TaskService();
   final NotificationService _notificationService= NotificationService();
   List<Task> _tasks = [];
+  List<Task> _todayTasks = [];
+  List<Task> _incompleteTasks = [];
   bool _isLoading = false;
 
   List<Task> get tasks => _tasks;
+  List<Task> get todayTasks => _todayTasks;
+  List<Task> get incompleteTasks => _incompleteTasks;
   bool get isLoading => _isLoading;
 
   Future<void> fetchTasks() async {
@@ -19,7 +23,8 @@ class TaskProvider with ChangeNotifier {
 
     try {
       _tasks = await _taskService.getTasks();
-      // showSnackBar('Tasks fetched successfully!');
+      _todayTasks = getTodayTasks();
+      _incompleteTasks = getIncompleteTasks();
     } catch (e) {
       showSnackBar('Failed to fetch tasks: ${e.toString()}');
     } finally {
@@ -36,6 +41,10 @@ class TaskProvider with ChangeNotifier {
     }).toList();
   }
 
+  List<Task> getIncompleteTasks() {
+    return _todayTasks.where((task) => task.status != 'DONE').toList();
+  }
+
   Future<void> addTask(Map<String, dynamic> taskData) async {
     _isLoading = true;
     notifyListeners();
@@ -43,7 +52,6 @@ class TaskProvider with ChangeNotifier {
     try {
       final newTask = await _taskService.createTask(taskData);
       _tasks.add(newTask);
-      _notificationService.scheduleDailyTaskReminders([newTask]);
       showSnackBar('Task added successfully!');
     } catch (e) {
       print(e);
