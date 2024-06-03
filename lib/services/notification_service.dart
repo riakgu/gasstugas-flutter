@@ -57,6 +57,14 @@ class NotificationService {
 
     for (var task in tasks) {
       final now = tz.TZDateTime.now(location);
+      final taskDeadline = DateTime.parse(task.deadline);
+
+      if (taskDeadline.year != now.year ||
+          taskDeadline.month != now.month ||
+          taskDeadline.day != now.day) {
+        continue;
+      }
+
       var scheduledTime = tz.TZDateTime(
         location,
         tz.TZDateTime.now(location).year,

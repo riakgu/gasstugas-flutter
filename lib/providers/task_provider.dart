@@ -52,6 +52,7 @@ class TaskProvider with ChangeNotifier {
     try {
       final newTask = await _taskService.createTask(taskData);
       _tasks.add(newTask);
+      _notificationService.scheduleDailyTaskReminders([newTask]);
       showSnackBar('Task added successfully!');
     } catch (e) {
       print(e);
