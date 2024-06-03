@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gasstugas_flutter/services/notification_service.dart';
 import '../models/task.dart';
 import '../services/task_service.dart';
 import '../utils/snackbar.dart';
 
 class TaskProvider with ChangeNotifier {
   final TaskService _taskService = TaskService();
+  final NotificationService _notificationService= NotificationService();
   List<Task> _tasks = [];
   bool _isLoading = false;
 
@@ -41,8 +43,10 @@ class TaskProvider with ChangeNotifier {
     try {
       final newTask = await _taskService.createTask(taskData);
       _tasks.add(newTask);
+      _notificationService.scheduleDailyTaskReminders([newTask]);
       showSnackBar('Task added successfully!');
     } catch (e) {
+      print(e);
       showSnackBar('Failed to add task: ${e.toString()}');
     } finally {
       _isLoading = false;

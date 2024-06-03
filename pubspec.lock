@@ -204,18 +204,18 @@ packages:
     dependency: transitive
     description:
       name: google_maps_flutter_ios
-      sha256: e5132d17f051600d90d79d9f574b177c24231da702453a036db2490f9ced4646
+      sha256: "244b3abc7cb611c4a5a2c5ce5a5f36a0d11bf5ccc3f05535d9baf61115ba9a5a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.0"
+    version: "2.6.1"
   google_maps_flutter_platform_interface:
     dependency: transitive
     description:
       name: google_maps_flutter_platform_interface
-      sha256: "2f3a3a3d03df5618e6d2320c3a6f09997ec517c3e9695e377b840f4abea83562"
+      sha256: "2bf21aa97edba4461282af5de693b354e589d09f695f7a6f80437d084a29687e"
       url: "https://pub.dev"
     source: hosted
-    version: "2.7.0"
+    version: "2.7.1"
   google_maps_flutter_web:
     dependency: transitive
     description:
@@ -392,6 +392,54 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.1"
+  permission_handler:
+    dependency: "direct main"
+    description:
+      name: permission_handler
+      sha256: "18bf33f7fefbd812f37e72091a15575e72d5318854877e0e4035a24ac1113ecb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "11.3.1"
+  permission_handler_android:
+    dependency: transitive
+    description:
+      name: permission_handler_android
+      sha256: "8bb852cd759488893805c3161d0b2b5db55db52f773dbb014420b304055ba2c5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "12.0.6"
+  permission_handler_apple:
+    dependency: transitive
+    description:
+      name: permission_handler_apple
+      sha256: e9ad66020b89ff1b63908f247c2c6f931c6e62699b756ef8b3c4569350cd8662
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.4.4"
+  permission_handler_html:
+    dependency: transitive
+    description:
+      name: permission_handler_html
+      sha256: "54bf176b90f6eddd4ece307e2c06cf977fb3973719c35a93b85cc7093eb6070d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
+  permission_handler_platform_interface:
+    dependency: transitive
+    description:
+      name: permission_handler_platform_interface
+      sha256: "48d4fcf201a1dad93ee869ab0d4101d084f49136ec82a8a06ed9cfeacab9fd20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.1"
+  permission_handler_windows:
+    dependency: transitive
+    description:
+      name: permission_handler_windows
+      sha256: "1a790728016f79a41216d88672dbc5df30e686e811ad4e698bfc51f76ad91f1e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
   petitparser:
     dependency: transitive
     description:
@@ -582,7 +630,7 @@ packages:
     source: hosted
     version: "0.6.1"
   timezone:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: timezone
       sha256: a6ccda4a69a442098b602c44e61a1e2b4bf6f5516e875bbf0f427d5df14745d5

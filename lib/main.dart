@@ -17,6 +17,8 @@ import 'screens/task_screen.dart';
 import 'screens/user_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/map_screen.dart';
+import 'screens/notification_screen.dart';
+import 'services/notification_service.dart';
 import 'utils/snackbar.dart';
 
 void main() {
@@ -65,6 +67,7 @@ class MyApp extends StatelessWidget {
           '/users': (context) => UserScreen(),
           '/profile': (context) => ProfileScreen(),
           '/map': (context) => MapScreen(),
+          '/notification': (context) => NotificationScreen(),
 
         },
       ),

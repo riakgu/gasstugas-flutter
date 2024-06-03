@@ -15,8 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final taskProvider = Provider.of<TaskProvider>(context, listen: false);
-      taskProvider
-          .fetchTasks(); // Fetch tasks after the first frame is rendered
+      taskProvider.fetchTasks(); // Fetch tasks after the first frame is rendered
     });
   }
 
@@ -121,7 +120,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     context, Iconsax.message_2, 'Chatbot', '/chatbot'),
                 _buildFeatureItem(
                     context, Iconsax.category_2, 'Category', '/categories'),
-                _buildFeatureItem(context, Iconsax.map_1_copy, 'Map', '/map'),
+                _buildFeatureItem(
+                    context, Iconsax.map_1_copy, 'Map', '/map'),
+                _buildFeatureItem(
+                    context, Iconsax.notification_1, 'Notification', '/notification'),
                 if (user?['role'] == 'admin')
                   _buildFeatureItem(context, Iconsax.people, 'Users', '/users'),
               ],
